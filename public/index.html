@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSea</title>
+<script src="mocha.js"></script>
+<link rel="stylesheet" href="mocha.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="container">
+    <div id="code-container"></div>
+    <div id="mocha"></div>
+</div>
+<script id="deepsea-code">
+class DeepSea {
+    constructor(depth = 0) {
+        if (depth >= 700) return;
+        this.mystery =
+            depth === Math.floor(Math.random() * 600) + 100 ?
+                new Coelacanth() : new DeepSea(depth + 1);
+    }
+}
+
+class Coelacanth {}
+
+new DeepSea();
+</script>
+<script src="testDeepSea.js"></script>
+</body>
+</html>

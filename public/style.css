@@ -1,0 +1,166 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #001f3f, #001833, #001025, #000a18, #000000);
+    color: #00ffff;
+    font-family: monospace;
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    font-size: 1vw;
+    animation: deepSeaEffect 10s infinite alternate ease-in-out;
+}
+
+@keyframes deepSeaEffect {
+    0% {
+        background-position: 0 0;
+        filter: blur(0) brightness(1);
+    }
+    50% {
+        background-position: 100% 100%;
+        filter: blur(0.05vw) brightness(0.6);
+    }
+    100% {
+        background-position: 0 0;
+        filter: blur(0) brightness(0.4);
+    }
+}
+
+#container {
+    position: relative;
+    width: 80%;
+    height: 100vh;
+    display: relative;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+#code-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1vw;
+    box-sizing: border-box;
+    z-index: 2;
+    color: #00CED1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 1.5vw;
+    line-height: 1.5;
+    backdrop-filter: blur(0.3vw);
+    animation: deepSeaWave 10s infinite ease-in-out;
+}
+
+@keyframes deepSeaWave {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-1vw);
+    }
+}
+
+#mocha {
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 2;
+    color: #D3D3D3;
+    overflow-y: auto;
+    margin: 0;
+    padding-bottom: 15%;
+    padding-left: 50%;
+    scrollbar-width: none;
+    opacity: 0.8;
+    backdrop-filter: blur(0.3vw);
+}
+
+#mocha::-webkit-scrollbar {
+    display: none;
+}
+
+#mocha ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#mocha h2 {
+    margin: 0;
+    font-size: 1.1vw;
+}
+
+#mocha .test.pass::before,
+#mocha .test.fail::before,
+#mocha .test pre.error,
+#mocha-stats {
+    font-size: 1.0vw;
+}
+
+#mocha-report li h1 {
+    display: none !important;
+}
+
+#mocha-report li ul li h2 a {
+    display: none !important;
+}
+
+#mocha-stats {
+    display: none !important;
+}
+
+.progress-contain {
+    display: none !important;
+}
+
+.bubble {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: bubbles 5s linear infinite;
+    width: calc(1vw + 1vh);
+    height: calc(1vw + 1vh);
+}
+
+@keyframes bubbles {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    #container {
+        margin-left: 2em;
+        width: 90%;
+        height: 80vh;
+    }
+
+    #code-container {
+        margin-top: -2em;
+        font-size: 2.3em;
+    }
+
+    #mocha {
+        padding-left: 40%;
+    }
+
+    #mocha h2,
+    #mocha .test.pass::before,
+    #mocha .test.fail::before,
+    #mocha .test pre.error,
+    #mocha-stats {
+        font-size: 0.3em;
+    }
+}
