@@ -41,26 +41,29 @@ function generateDeepWave(step) {
   return Math.floor(amplitude * Math.sin(step * frequency) + amplitude + 1);
 }
 
+let baseAmplitude;
+let baseFrequency;
+let amplitudeFactors;
+let frequencyFactors;
+
 function generateComplexWave(step) {
-  const baseAmplitude = 15;
-  const baseFrequency = 0.1;
   const pressureFactor = Math.log(step + 1) / 10;
 
   const amplitude1 = baseAmplitude / (1 + pressureFactor);
   const frequency1 = baseFrequency * (1 + pressureFactor);
 
-  const amplitude2 = amplitude1 * 0.5;
-  const frequency2 = frequency1 * 2;
+  const amplitude2 = amplitude1 * amplitudeFactors[0];
+  const frequency2 = frequency1 * frequencyFactors[0];
 
-  const amplitude3 = amplitude1 * 0.3;
-  const frequency3 = frequency1 * 3;
+  const amplitude3 = amplitude1 * amplitudeFactors[1];
+  const frequency3 = frequency1 * frequencyFactors[1];
 
-  const wave = Math.floor(
-      amplitude1 * Math.sin(step * frequency1) +
-      amplitude2 * Math.sin(step * frequency2) +
-      amplitude3 * Math.sin(step * frequency3) +
-      baseAmplitude + 1
-  );
+  const wave = Math.max(Math.floor(
+    amplitude1 * Math.sin(step * frequency1) +
+    amplitude2 * Math.sin(step * frequency2) +
+    amplitude3 * Math.sin(step * frequency3) +
+    baseAmplitude + 1
+  ), 0);
 
   return wave;
 }
@@ -78,11 +81,12 @@ function addBubbles() {
 }
 
 function resetBrightness() {
-  document.body.style.filter = 'brightness(1) blur(0px)';
+  document.body.style.filter = 'brightness(1.2)';
 }
 
 function updateBackgroundBrightness(step) {
-  const brightness = Math.max(1 - step * 0.01, 0.2);
+  const brightness = Math.max(1.2 - step * 0.001, 0.4);
+  console.log(step, brightness);
   document.body.style.filter = `brightness(${brightness})`;
 }
 
@@ -94,8 +98,6 @@ function evaluateMystery(mystery, step, interval, amplitude, frequency) {
     ({ amplitude, frequency } = generateComplexWave(step));
   }
 
-  updateBackgroundBrightness(step);
-
   const waveLength = generateComplexWave(step);
   const title = textDisplay ? 
     `should not encounter a Coelacanth at depth ${step + 1}` :
@@ -103,6 +105,7 @@ function evaluateMystery(mystery, step, interval, amplitude, frequency) {
 
   it(title, async () => {
     await sleep(10);
+    updateBackgroundBrightness(step);
 
     if (!(mystery instanceof DeepSea)) {
       throw new Found();
@@ -114,6 +117,11 @@ function evaluateMystery(mystery, step, interval, amplitude, frequency) {
 
 function exploreDepths(instance) {
   mocha.suite.suites = [];
+
+  baseAmplitude = Math.random() * 6 + 10;
+  baseFrequency = Math.random() * 0.05 + 0.1;
+  amplitudeFactors = [Math.random(), Math.random()];
+  frequencyFactors = [Math.random() * 5, Math.random() * 5];
 
   describe('', () => {
     let current = instance.mystery;
@@ -131,13 +139,14 @@ function exploreDepths(instance) {
 }
 
 function fadeOutMocha(callback) {
-  const mochaEl = document.getElementById('mocha');
-  mochaEl.style.transition = 'opacity 1.0s ease-out';
-  mochaEl.style.opacity = 0;
-  mochaEl.addEventListener('transitionend', function onTransitionEnd() {
-    mochaEl.removeEventListener('transitionend', onTransitionEnd);
-    mochaEl.innerHTML = '';
-    mochaEl.style.opacity = 0.8;
+  const mochaDiv = document.getElementById('mocha');
+  mochaDiv.style.transition = 'opacity 1.0s ease-out';
+  mochaDiv.style.opacity = 0;
+  mochaDiv.addEventListener('transitionend', function onTransitionEnd() {
+    mochaDiv.removeEventListener('transitionend', onTransitionEnd);
+    mochaDiv.innerHTML = '';
+    mochaDiv.style.opacity = 0.8;
+    resetBrightness();
     callback();
   });
 }
@@ -157,6 +166,11 @@ function reflectOnSelf() {
         reflectOnSelf();
       });
     }, 4000);
+    document.body.style.transition = 'filter 4.0s ease-out';
+    document.body.style.filter = 'brightness(1.2)';
+    setTimeout(() => {
+      document.body.style.transition = '';
+    }, 4000);  
   });
 }
 
