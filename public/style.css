@@ -116,7 +116,7 @@ body {
 .bubble {
     position: absolute;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.0);
     border-radius: 50%;
     animation: bubbles 5s linear infinite;
     width: calc(1vw + 1vh);
