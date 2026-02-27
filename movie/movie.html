@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSea — Movie</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&display=swap" rel="stylesheet">
+<script src="mocha.js"></script>
+<link rel="stylesheet" href="mocha.css">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Title overlay */
+  #title-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20vh;
+    box-sizing: border-box;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 2s ease-out;
+  }
+  #title-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #title-overlay h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: 5rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+  }
+  #title-overlay .author {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #888;
+    letter-spacing: 0.15em;
+  }
+
+  /* Statement overlay */
+  #statement-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20vh;
+    box-sizing: border-box;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 3s ease;
+  }
+  #statement-overlay.fade-in {
+    opacity: 1;
+  }
+  #statement-overlay.fade-out {
+    opacity: 0;
+  }
+  #statement-overlay .statement {
+    font-family: 'EB Garamond', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.8;
+    text-align: left;
+    color: #ccc;
+    max-width: 900px;
+    padding: 0 3rem;
+  }
+  #statement-overlay .statement p {
+    margin-bottom: 1.5em;
+  }
+
+  /* Container fade */
+  #container {
+    transition: opacity 3s ease-out;
+  }
+  #container.fade-out {
+    opacity: 0;
+  }
+
+  /* Code poem fade in */
+  #code-container {
+    opacity: 0;
+    transition: opacity 2s ease-in;
+  }
+  #code-container.fade-in {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- Title Overlay -->
+<div id="title-overlay">
+  <h1>DeepSea</h1>
+  <div class="author">Zeroichi Arakawa</div>
+</div>
+
+<!-- Statement Overlay (end) -->
+<div id="statement-overlay">
+  <div class="statement">
+    <p>A test suite runs against a recursive poem. Each line asserts non-encounter. Failure is not a defect; it registers that something has already occurred beyond verification's reach.</p>
+  </div>
+</div>
+
+<!-- Main Content (DeepSea) -->
+<div id="container">
+    <div id="code-container"></div>
+    <div id="mocha"></div>
+</div>
+
+<script id="deepsea-code">
+class DeepSea {
+    constructor(depth = 0) {
+        if (depth >= 700) return;
+        this.mystery =
+            depth === Math.floor(Math.random() * 600) + 100 ?
+                new Coelacanth() : new DeepSea(depth + 1);
+    }
+}
+
+class Coelacanth {}
+
+new DeepSea();
+</script>
+
+<script>
+const TITLE_DURATION = 8000;
+const FADE_DURATION = 2000;
+const STATEMENT_DURATION = 8000;
+const BLACK_SCREEN_DURATION = 2000;
+const CODE_POEM_DELAY = 3000;
+const CONTAINER_FADE_DURATION = 3000;
+const TEST_DURATION = 152000; // ~2:32, total movie ~3:00
+
+// Flag to stop DeepSea from restarting
+window.stopDeepSea = false;
+
+window.addEventListener('DOMContentLoaded', () => {
+  const titleOverlay = document.getElementById('title-overlay');
+  const statementOverlay = document.getElementById('statement-overlay');
+  const container = document.getElementById('container');
+
+  // 1. Show title for 8 seconds, then fade out
+  setTimeout(() => {
+    titleOverlay.classList.add('fade-out');
+
+    // 2. After title fades, show statement
+    setTimeout(() => {
+      titleOverlay.style.display = 'none';
+      statementOverlay.classList.add('fade-in');
+
+      // 3. After statement duration, fade out statement
+      setTimeout(() => {
+        statementOverlay.classList.remove('fade-in');
+        statementOverlay.classList.add('fade-out');
+
+        // 4. After statement fades + black screen, load tests
+        setTimeout(() => {
+          statementOverlay.style.display = 'none';
+
+          // Load and run tests
+          const script = document.createElement('script');
+          script.src = 'testDeepSea.js';
+          script.onload = () => {
+            // Show code poem first
+            weavePoem();
+            prepareForLife();
+            addBubbles();
+
+            // Fade in code poem
+            const codeContainer = document.getElementById('code-container');
+            requestAnimationFrame(() => {
+              codeContainer.classList.add('fade-in');
+            });
+
+            // Wait 3 seconds, then start tests
+            setTimeout(() => {
+              reflectOnSelf();
+
+              // After TEST_DURATION, fade out to end
+              setTimeout(() => {
+                window.stopDeepSea = true;
+                container.classList.add('fade-out');
+              }, TEST_DURATION);
+            }, CODE_POEM_DELAY);
+          };
+          document.body.appendChild(script);
+        }, FADE_DURATION + BLACK_SCREEN_DURATION);
+      }, STATEMENT_DURATION);
+    }, FADE_DURATION);
+  }, TITLE_DURATION);
+});
+</script>
+
+</body>
+</html>
