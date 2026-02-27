@@ -2,24 +2,40 @@
 
 https://deepsea.poesy.run/
 
-## 作品解説
-この作品は、JavaScript で書かれた短い詩を、テストという行為を通じて探求する試みです。テストはソフトウェア開発において重要なプロセスであり、コードの実行結果を検証するために様々なツールが開発されています。この作品では JavaScript 用のテストフレームワーク Mocha を組み込み、ブラウザ上でコードのテストを繰り返し行います。
-作品の中心には「DeepSea」と名付けたクラスがあります。このクラスは再帰的なコンストラクタを持ち、インスタンス化されると内部変数「mystery」に別のインスタンスを格納します。そのインスタンスはほとんどの場合、同じ「DeepSea」クラスのインスタンスですが、深く深く潜った場合、低い確率で古代魚のインスタンスが格納されることがあります。
-私は、このような構造をプログラミング言語の持つ独自の価値と捉えています。視覚化されていなくとも、この構造そのものがジェネラティブアートと呼べるのではないかと考えています。テストフレームワークは、その内部状態を解き明かし、共有する手段を提供します。これは期待と現実のギャップを明らかにし、古代魚がまだ生きているという歴史的な出来事を思い出させます。この作品が、テストとコード作品の関係について考えるきっかけとなることを願います。
+[日本語版 README](./README_ja.md)
 
-## 作品データ
+## About
+
+This work explores a short poem written in JavaScript through the act of testing. Testing is a crucial process in software development, and various tools have been developed to verify the execution results of code. This work incorporates Mocha, a JavaScript testing framework, and repeatedly tests the code in the browser.
+
+At the center of the work is a class called "DeepSea." This class has a recursive constructor that, when instantiated, stores another instance in its internal variable "mystery." In most cases, this instance is another instance of the same "DeepSea" class, but when diving deep enough, there is a small probability that an instance of an ancient fish will be stored instead.
+
+I consider this kind of structure to be a unique value of programming languages. Even without visualization, I believe this structure itself can be called generative art. The testing framework provides a means to unravel and share its internal state. This reveals the gap between expectation and reality, reminding us of the historical event that ancient fish are still alive. I hope this work will serve as an opportunity to think about the relationship between testing and code-based art.
+
+## Statement
+
+A test suite runs against a recursive poem. Each line asserts non-encounter. Failure is not a defect; it registers that something has already occurred beyond verification's reach.
+
+## Files
+
 - index.html
 - style.css
 - testDeepSea.js
-- mocha.js (外部ライブラリ)
-- mocha.css (外部ライブラリ)
+- mocha.js (external library)
+- mocha.css (external library)
 
-## その他
-- DeepSea コード詩の Ruby 言語バージョン: https://x.com/arandoros/status/1750138630222606820
-- DeepSea コード詩の Cadence 言語バージョン: https://x.com/arandoros/status/1750161046571020299
-    - 実行結果: https://x.com/arandoros/status/1750161049158869383
+## Movie
 
-## ライセンス
-この作品は、[クリエイティブ・コモンズ 表示 4.0 国際 ライセンス](https://creativecommons.org/licenses/by/4.0/deed.ja)の下に提供されています。  
-あなたは、原作者のクレジットを表示する限りにおいて、この作品を自由に共有・改変することができます。  
-詳細なライセンス内容は、[こちら](https://creativecommons.org/licenses/by/4.0/deed.ja)をご確認ください。
+The `movie/` folder contains an HTML file for recording a 3-minute video of the work.
+
+## Other Versions
+
+- DeepSea code poem in Ruby: https://x.com/arandoros/status/1750138630222606820
+- DeepSea code poem in Cadence: https://x.com/arandoros/status/1750161046571020299
+    - Execution result: https://x.com/arandoros/status/1750161049158869383
+
+## License
+
+This work is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
+You are free to share and adapt this work as long as you give appropriate credit to the original author.
+For more details, please see [here](https://creativecommons.org/licenses/by/4.0/).
